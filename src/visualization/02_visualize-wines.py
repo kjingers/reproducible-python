@@ -10,6 +10,7 @@ import datetime
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 def create_plots(filename):
     """
@@ -66,8 +67,17 @@ def plot_scatter(wine):
     ax.set_xlabel('Points')
 
     fname = f'figures/fig02_scatter-points-vs-price.png'
-    fig.savefig(fname, bbox_inches = 'tight')
+    
+    try:
+        fig.savefig(fname, bbox_inches = 'tight')
+    except OSError as e:
+        # wowza! the directory does not exist
+        os.makedirs('figures')
+        print('Creating figures directory')
+        fig.savefig(fname, bbox_inches='tight')
+
     return (fname)
+
 
 
 if __name__ == '__main__':
